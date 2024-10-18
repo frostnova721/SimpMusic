@@ -117,8 +117,7 @@ fun HomeItem(
                     } else {
                         homeViewModel.updateLikeStatus(track.videoId, false)
                     }
-                }
-                else if (track != null && track.videoId == sharedViewModel.nowPlayingState.value?.mediaItem?.mediaId) {
+                } else if (track != null && track.videoId == sharedViewModel.nowPlayingState.value?.mediaItem?.mediaId) {
                     sharedViewModel.onUIEvent(UIEvent.ToggleLike)
 
                 }
@@ -422,41 +421,37 @@ fun QuickPicksItem(
                 .width(configuration.screenWidthDp.dp)
                 .padding(10.dp)
         ) {
-            CoilImage(
-                imageModel = {
-                    data.thumbnails.lastOrNull()?.url
-                }, // loading a network image or local resource using an URL.
-                imageOptions = ImageOptions(
-                    contentScale = ContentScale.Crop,
-                    alignment = Alignment.Center,
-                ),
-                requestListener = {
-                    object : ImageRequest.Listener {
-                        override fun onSuccess(request: ImageRequest, result: SuccessResult) {
-                            super.onSuccess(request, result)
-                            Log.w(tag, "onSuccess: ${data.title}")
-                        }
-
-                        override fun onStart(request: ImageRequest) {
-                            super.onStart(request)
-                            Log.w(tag, "onStart: ${data.thumbnails.lastOrNull()?.url}")
-                        }
-                    }
-                },
-                component = rememberImageComponent {
-                    +CrossfadePlugin(
-                        duration = 550
-                    )
-                    +PlaceholderPlugin.Loading(painterResource(id = R.drawable.holder))
-                    +PlaceholderPlugin.Failure(painterResource(id = R.drawable.holder))
-                },
+            AsyncImage(
+                model = data.thumbnails.lastOrNull()?.url, contentDescription = "",
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .size(50.dp)
                     .clip(
                         RoundedCornerShape(10)
-                    )
+                    ),
             )
+//            CoilImage(
+//                imageModel = {
+//                    data.thumbnails.lastOrNull()?.url
+//                }, // loading a network image or local resource using an URL.
+//                imageOptions = ImageOptions(
+//                    contentScale = ContentScale.Crop,
+//                    alignment = Alignment.Center,
+//                ),
+//                component = rememberImageComponent {
+//                    +CrossfadePlugin(
+//                        duration = 550
+//                    )
+//                    +PlaceholderPlugin.Loading(painterResource(id = R.drawable.holder))
+//                    +PlaceholderPlugin.Failure(painterResource(id = R.drawable.holder))
+//                },
+//                modifier = Modifier
+//                    .align(Alignment.CenterVertically)
+//                    .size(50.dp)
+//                    .clip(
+//                        RoundedCornerShape(10)
+//                    ),
+//            )
             Column(
                 Modifier
                     .padding(

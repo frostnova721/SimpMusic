@@ -373,7 +373,7 @@ fun LazyListState.isScrollingUp(): Boolean {
 
     return remember(this) {
         derivedStateOf {
-            Log.w("isScrollingUp", "offset: $firstVisibleItemScrollOffset")
+//            Log.w("isScrollingUp", "offset: $firstVisibleItemScrollOffset")
             if (firstVisibleItemIndex > 0)  {
                 if (previousIndex != firstVisibleItemIndex) {
                     previousIndex > firstVisibleItemIndex
